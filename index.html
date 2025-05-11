@@ -5,221 +5,168 @@
     <title>Weather Forecast</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<style>
-.container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 700px;
-  height: 500px;
-  transform: translate(-50%, -50%);
-  background-color: #ffffffa6;
-  padding: 0px;
-  border-radius: 25px;
-  border: 10px solid #41404000;
-  display: flex;
-  justify-content: space-between;
-}
+    <style>
+  .container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 700px;
+    height: 500px;
+    transform: translate(-50%, -50%);
+    background-color: #ffffffa6;
+    padding: 0px;
+    border-radius: 25px;
+    border: 10px solid #41404000;
+    display: flex;
+    justify-content: space-between;
+  }
 
+  /* Left and Right Boxes */
+  .left-box {
+    background-color: #cccccc00;
+    padding: 0px;
+    border: 1px solid #aaaaaa00;
+    width: 250px;
+  }
 
-.left-box {
-  background-color: #cccccc00;
-  padding:0px;
-  border: 1px solid #aaaaaa00;
-  width: 250px;
-}
-
-.right-box {
+  .right-box {
     width: 450px;
-  background-color: #cccccc00;
-  padding: 0px;
-  border: 1px solid #aaaaaa00;
-}
-.left-box2 {
-  background-color: #2e151500;
-  padding:0px;
-  border: 1px solid #aaaaaa00;
-  width: 120px;
-  height: 90px;
-  text-align: center;
-  margin-top: 0;
-}
-.left-box2 p{
-  font-family: Courier, monospace;
-  font-size: 40px;
+    background-color: #cccccc00;
+    padding: 0px;
+    border: 1px solid #aaaaaa00;
+  }
 
-}
-
-.right-box2 {
+  /* Box Styles */
+  .left-box2, .right-box2 {
+    background-color: #2e151500;
+    padding: 0px;
+    border: 1px solid #aaaaaa00;
     width: 120px;
-  background-color: #cccccc00;
-  padding: 0px;
-  border: 1px solid #aaaaaa00;
-  height: 90px;
-  text-align: center;
-}
-.right-box2 p{
-  font-family: Courier, monospace;
-  font-size: 36px;
+    height: 90px;
+    text-align: center;
+    margin-top: 0;
+  }
 
-}
+  .left-box2 p, .right-box2 p {
+    font-family: Courier, monospace;
+    font-size: 40px;
+  }
 
-.top-box {
-  background-color: #35aa4500;
-  padding: 0px;
-  height: 100px;
-  border: 1px solid #aaaaaa00;
-}
+  /* Background and Navbar */
+  body {
+    height: 650px;
+    width: 1300px;
+    background-image: url('./bg-main.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-size: 1360px 750px;
+    border: 0px;
+  }
 
-.bottom-box {
-  background-color: #a54a4a00;
-  padding: 0px;
-  height: 395px;
-  border: 1px solid #aaaaaa00;
-}
-.bottom-box2{
-    background-color: hsla(0, 45%, 76%, 0);
-  padding: 0px;
-  height: 310px;
-  border: 1px solid #aaaaaa00;
-}
-.top-box2{
-    background-color: #b1eeb900;
-  padding: 0px;
-  height: 80px;
-  border: 1px solid #aaaaaa00; 
-  text-align: center;
-}
-.top-box2 p{
-  font-family: Courier, monospace;
-  font-size: 20px;
-}
-.bottom-box3{
-    background-color: hsla(0, 0%, 41%, 0);
-  padding: 4px;
-  height: 210px;
-  border: 1px solid #aaaaaa00;
-}
-.top-box3{
-    background-color: #b1eeb900;
-  padding: 0px;
-  height: 90px;
-  border: 1px solid #aaaaaa00; 
-  display: flex;
-  justify-content: space-between;
-  background-color: #ffffff00;
-  padding: 0px;
-  border: 1px solid #aaaaaa00;
-}
-.bottom-box4{
-    background-color: hsla(0, 45%, 76%, 0);
-  padding: 0px;
-  height: 190px;
-  border: 1px solid #aaaaaa00;
-  display: flex;
-  justify-content: space-between;
-}
-.top-box4{
-    background-color: #b1eeb900;
-  padding: 0px;
-  height:  300px;
-  border: 1px solid #aaaaaa00; 
-}
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    height: 30px;
+    width: 1323px;
+  }
 
-.top-box5 {
-  background-color: #cccccc00;
-  padding: 0px;
-  border: 1px solid #80353500;
-  text-align: center;
-}
-.top-box5 p{
-  font-family: Courier, monospace;
-  font-size: 26px;
+  .logo {
+    color: rgba(255, 255, 255, 0.87);
+    font-size: 70px;
+  }
 
-}
+  .navbar h1 {
+    font-size: 50px;
+    color: rgb(255, 219, 205);
+  }
 
-.bottom-box5 {
-  background-color: #cccccc00;
-  padding: 0px;
-  border: 1px solid #aaaaaa00;
-  height: 150px;
-  text-align: center;
-}
-.bottom-box5 p{
-  font-family: Courier, monospace;
-  font-size: 18px;
-  text-align: justify;
-}
-.box {
-  background-color:rgba(245, 245, 220, 0);
-  padding: 0px;
-  border: 1px solid #aaaaaa00;
-  width: 22%; /* adjust the width to your needs */
-  margin: 10px;
-}
-.box span{
-  font-size: 15px;
-  transform: scale(3); /* Scale the symbol by a factor of 2 */
-  display: inline-block; 
-  padding: 0%;
-  height:30px;
-}
+  /* Responsive Layout */
+  @media screen and (max-width: 768px) {
+    .container {
+      flex-direction: column;
+      width: 90%;
+      height: auto;
+      padding: 10px;
+    }
 
-body {
-  height: 650px;
-  width: 1300px;
-  background-image: url('./bg-main.png');
-  background-size: cover; 
-  background-repeat: no-repeat; 
-  background-size: 1360px 750px;
-  border: 0px;
-}
+    .left-box, .right-box {
+      width: 100%;
+      margin-bottom: 10px;
+    }
 
-label {
-  font-weight: bold;
-}
-input[type="text"] {
-  min-width: 100px;
-  padding: 5px;
-  margin: 0px 0;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-button {
-  display: block;
-  margin: 12px;
-  padding: 5px;
-  background-color: #87CEEB; 
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-button:hover {
-  background-color: #6495ED;
-}
-canvas { width: 400px; height: 300px; }
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  height: 30px;
-  width: 1323px;
-}
+    .left-box2, .right-box2 {
+      width: 100%;
+      height: 80px;
+    }
 
-.logo{
-  color: rgba(255, 255, 255, 0.87);
-  font-size: 70px;
-}
+    .top-box, .bottom-box, .top-box2, .bottom-box2, .top-box3, .bottom-box3, .top-box4, .bottom-box4 {
+      padding: 5px;
+    }
 
-.navbar h1{
-  font-size: 50px;
-  color: rgb(255, 219, 205);
-}
+    .top-box2 p, .bottom-box5 p {
+      font-size: 16px;
+    }
 
+    .left-box2 p, .right-box2 p {
+      font-size: 30px;
+    }
+
+    .box {
+      width: 48%;
+      margin: 5px;
+    }
+
+    canvas {
+      width: 100%;
+      height: 250px;
+    }
+  }
+
+  /* Further Adjustments for Small Screens */
+  @media screen and (max-width: 480px) {
+    .navbar h1 {
+      font-size: 30px;
+    }
+
+    .logo {
+      font-size: 50px;
+    }
+
+    .left-box, .right-box {
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    .left-box2, .right-box2 {
+      width: 100%;
+      height: 60px;
+    }
+
+    .top-box2 p, .bottom-box5 p {
+      font-size: 14px;
+    }
+
+    .left-box2 p, .right-box2 p {
+      font-size: 20px;
+    }
+
+    .box {
+      width: 45%;
+    }
+
+    .bottom-box {
+      height: auto;
+    }
+
+    canvas {
+      width: 100%;
+      height: 200px;
+    }
+  }
 </style>
+
 </head>
 <body>
   <div class="navbar">
