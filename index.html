@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Forecast</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+.container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 700px;
+  height: 500px;
+  transform: translate(-50%, -50%);
+  background-color: #ffffffa6;
+  padding: 0px;
+  border-radius: 25px;
+  border: 10px solid #41404000;
+  display: flex;
+  justify-content: space-between;
+}
+
+
+.left-box {
+  background-color: #cccccc00;
+  padding:0px;
+  border: 1px solid #aaaaaa00;
+  width: 250px;
+}
+
+.right-box {
+    width: 450px;
+  background-color: #cccccc00;
+  padding: 0px;
+  border: 1px solid #aaaaaa00;
+}
+.left-box2 {
+  background-color: #2e151500;
+  padding:0px;
+  border: 1px solid #aaaaaa00;
+  width: 120px;
+  height: 90px;
+  text-align: center;
+  margin-top: 0;
+}
+.left-box2 p{
+  font-family: Courier, monospace;
+  font-size: 40px;
+
+}
+
+.right-box2 {
+    width: 120px;
+  background-color: #cccccc00;
+  padding: 0px;
+  border: 1px solid #aaaaaa00;
+  height: 90px;
+  text-align: center;
+}
+.right-box2 p{
+  font-family: Courier, monospace;
+  font-size: 36px;
+
+}
+
+.top-box {
+  background-color: #35aa4500;
+  padding: 0px;
+  height: 100px;
+  border: 1px solid #aaaaaa00;
+}
+
+.bottom-box {
+  background-color: #a54a4a00;
+  padding: 0px;
+  height: 395px;
+  border: 1px solid #aaaaaa00;
+}
+.bottom-box2{
+    background-color: hsla(0, 45%, 76%, 0);
+  padding: 0px;
+  height: 310px;
+  border: 1px solid #aaaaaa00;
+}
+.top-box2{
+    background-color: #b1eeb900;
+  padding: 0px;
+  height: 80px;
+  border: 1px solid #aaaaaa00; 
+  text-align: center;
+}
+.top-box2 p{
+  font-family: Courier, monospace;
+  font-size: 20px;
+}
+.bottom-box3{
+    background-color: hsla(0, 0%, 41%, 0);
+  padding: 4px;
+  height: 210px;
+  border: 1px solid #aaaaaa00;
+}
+.top-box3{
+    background-color: #b1eeb900;
+  padding: 0px;
+  height: 90px;
+  border: 1px solid #aaaaaa00; 
+  display: flex;
+  justify-content: space-between;
+  background-color: #ffffff00;
+  padding: 0px;
+  border: 1px solid #aaaaaa00;
+}
+.bottom-box4{
+    background-color: hsla(0, 45%, 76%, 0);
+  padding: 0px;
+  height: 190px;
+  border: 1px solid #aaaaaa00;
+  display: flex;
+  justify-content: space-between;
+}
+.top-box4{
+    background-color: #b1eeb900;
+  padding: 0px;
+  height:  300px;
+  border: 1px solid #aaaaaa00; 
+}
+
+.top-box5 {
+  background-color: #cccccc00;
+  padding: 0px;
+  border: 1px solid #80353500;
+  text-align: center;
+}
+.top-box5 p{
+  font-family: Courier, monospace;
+  font-size: 26px;
+
+}
+
+.bottom-box5 {
+  background-color: #cccccc00;
+  padding: 0px;
+  border: 1px solid #aaaaaa00;
+  height: 150px;
+  text-align: center;
+}
+.bottom-box5 p{
+  font-family: Courier, monospace;
+  font-size: 18px;
+  text-align: justify;
+}
+.box {
+  background-color:rgba(245, 245, 220, 0);
+  padding: 0px;
+  border: 1px solid #aaaaaa00;
+  width: 22%; /* adjust the width to your needs */
+  margin: 10px;
+}
+.box span{
+  font-size: 15px;
+  transform: scale(3); /* Scale the symbol by a factor of 2 */
+  display: inline-block; 
+  padding: 0%;
+  height:30px;
+}
+
+body {
+  height: 650px;
+  width: 1300px;
+  background-image: url('./bg-main.png');
+  background-size: cover; 
+  background-repeat: no-repeat; 
+  background-size: 1360px 750px;
+  border: 0px;
+}
+
+label {
+  font-weight: bold;
+}
+input[type="text"] {
+  min-width: 100px;
+  padding: 5px;
+  margin: 0px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+button {
+  display: block;
+  margin: 12px;
+  padding: 5px;
+  background-color: #87CEEB; 
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+button:hover {
+  background-color: #6495ED;
+}
+canvas { width: 400px; height: 300px; }
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  height: 30px;
+  width: 1323px;
+}
+
+.logo{
+  color: rgba(255, 255, 255, 0.87);
+  font-size: 70px;
+}
+
+.navbar h1{
+  font-size: 50px;
+  color: rgb(255, 219, 205);
+}
+
+</style>
+</head>
+<body>
+  <div class="navbar">
+    <h1>Weatherify</h1>
+    <span class="logo" >&#9729;</span>
+</div>
+<div class="container">
+    <div class="left-box">
+        <div class="top-box">
+          <label for="city">Enter City: </label>
+            <input type="text" id="cityInput" placeholder="Enter city name">
+            <button id="fetchWeatherBtn" onclick="fetchweather()">Get Weather</button>
+        </div>
+        <div class="bottom-box">
+            <div class="top-box2" id="date"></div>
+            <div class="bottom-box2">
+                <div class="top-box3">
+                  <div class="left-box2" id="weatherDisplay"></div>
+                    <div class="right-box2"  id="fahrenheit"></div>
+                </div>
+                <div class="bottom-box3" >
+                  <div class="top-box5" id="weathercondn"></div>
+                  <div class="bottom-box5" id="currentweather"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="right-box">
+      <div class="top-box4" id="top-box4">
+        <canvas id="temperatureChart" width="400" height="300"></canvas>
+      </div>
+        <div class="bottom-box4">
+          <div class="box box1" id="day1"></div>
+          <div class="box box2" id="day2"></div>
+          <div class="box box3" id="day3"></div>
+          <div class="box box4" id="day4"></div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/axios@0.21.1/dist/axios.min.js"></script>
+    <script>
+     let date = new Date();
+let dayOfMonth = date.getDate();
+let dayOfWeek = date.getDay();
+let month = date.getMonth();
+let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+let month_t = months[month];
+let day = days[dayOfWeek];
+let year = date.getFullYear();
+document.getElementById("date").innerHTML = `<p>${day}, ${month_t} ${dayOfMonth}, ${year}</p>`;
+
+const API_KEY = '086fc447ad9d043f22039e4299c80331';
+
+async function getWeather(city) {
+    if (!city) return alert('Please enter a city name.');
+
+    try {
+        // Get current weather and forecast
+        const response = await axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${API_KEY}&units=metric`);
+        const currentWeather = response.data.list[0]; // Current weather is the first entry
+        const labels = [];
+        const temperatures = [];
+        
+        // Collect forecast data
+        for (let i = 0; i < response.data.list.length; i += 8) {
+            labels.push(new Date(response.data.list[i].dt * 1000).toLocaleDateString());
+            temperatures.push(response.data.list[i].main.temp);
+        }
+        
+        // Update current weather display
+        document.getElementById('fahrenheit').innerHTML = `<p>${Math.round((currentWeather.main.temp * 9/5) + 32)}°F</p>`;
+        const weatherData = getWeatherSymbol(currentWeather.weather[0].description);
+        document.getElementById('weatherDisplay').innerHTML = weatherData.symbol;
+        document.getElementById('weathercondn').innerHTML = `<p>${currentWeather.weather[0].description}</p>`;
+        document.getElementById('currentweather').innerHTML = `<p>Wind Speed: ${currentWeather.wind.speed} m/s<br>Humidity: ${currentWeather.main.humidity}%</p>`;
+
+        // Update future weather
+        let forecastHtml = [];
+        for (let i = 1; i <= 4; i++) {
+            const forecast = response.data.list[i * 8]; // Every 8th entry is a day ahead
+            const tday_t = days[new Date(forecast.dt * 1000).getDay()];
+            const t_symbol = getWeatherSymbol(forecast.weather[0].description);
+            forecastHtml.push(`
+                ${tday_t}<br>
+                <span>${t_symbol.symbol}<br></span>
+                Temperature: ${Math.round(forecast.main.temp)}°C<br>
+                Humidity: ${forecast.main.humidity}%
+            `);
+        }
+        document.getElementById('day1').innerHTML = forecastHtml[0];
+        document.getElementById('day2').innerHTML = forecastHtml[1];
+        document.getElementById('day3').innerHTML = forecastHtml[2];
+        document.getElementById('day4').innerHTML = forecastHtml[3];
+        document.getElementById('top-box4').innerHTML='<canvas id="temperatureChart" width="400" height="300"></canvas>';
+        displayChart(labels, temperatures);
+
+        // Update chart
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+function fetchweather() {
+    const city = document.getElementById('cityInput').value;
+    getWeather(city);
+}
+
+function getWeatherSymbol(condition) {
+    switch (condition) {
+    case 'broken clouds':
+  return { symbol: '<p>&#x1F325;</p>' }; // 🌥️
+case 'overcast clouds':
+  return { symbol: '<p>&#x2601;</p>' }; // ☁️
+case 'light rain':
+  return { symbol: '<p>&#x1F326;</p>' }; // 🌦️
+case 'few clouds':
+  return { symbol: '<p>&#x1F324;</p>' }; // 🌤️
+case 'clear sky':
+  return { symbol: '<p>&#x2600;</p>' }; // ☀️
+case 'moderate rain':
+  return { symbol: '<p>&#x1F327;</p>' }; // 🌧️
+case 'heavy intensity rain':
+  return { symbol: '<p>&#x1F327;</p>' }; // 🌧️
+case 'scattered clouds':
+  return { symbol: '<p>&#x1F325;</p>' }; // ⛅
+case 'haze':
+  return { symbol: '<p>&#127787;</p>' }; // 🌫️
+    default:
+      return { symbol: '❓' }; // Default case for unknown conditions
+  }
+}
+
+
+function displayChart(labels, temperatures) {
+    const ctx = document.getElementById('temperatureChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels,
+            datasets: [{
+                label: 'Temperature (°C)',
+                data: temperatures,
+                borderColor: 'rgba(75, 192, 192, 1)',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                fill: true,
+                tension: 0.1
+            }]
+        },
+        options: { responsive: false, scales: { y: { beginAtZero: true } } }
+    });
+}
+
+getWeather('trichy'); // Default city
+
+    </script>
+</body>
+</html>
